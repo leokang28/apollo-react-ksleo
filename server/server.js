@@ -1,6 +1,7 @@
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import BodyParser from 'body-parser';
+import cors from 'cors';
 import { schema } from './src/schema';
 
 const PORT = 3001;
@@ -10,6 +11,7 @@ const server = express();
 // server.get('/', function (req, res) {
 //   res.send('Hello World!');
 // });
+server.use('*', cors({ origin: 'http://localhost:3000' }))
 
 server.use('/graphql', BodyParser.json(), graphqlExpress({ schema }))
 server.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
